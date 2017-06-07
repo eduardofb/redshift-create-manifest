@@ -1,15 +1,12 @@
 import boto3
-import math
-import random
 import json
 import os
 import getopt
 
 #create a MANIFEST file and upload to S3
 def create_manifest(bucket, prefix, entries):
-    rand = math.floor(int(random.random()) * 10000)
-    manifest_name = "manifest-%s.manifest" % (rand)
-
+    manifest_name = "manifest"
+    
     manifest_file = {'entries':[]}
     for entri in entries:
         manifest_file['entries'].append({
@@ -31,7 +28,7 @@ def create_manifest(bucket, prefix, entries):
         s3_client = boto3.client('s3')
         s3_client.upload_file(_file,bucket,key)
     else:
-        raise Exception("Arquivo noo salvo")
+        raise Exception("file not saved")
 
     return key
 
